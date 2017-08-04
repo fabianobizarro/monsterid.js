@@ -4,7 +4,7 @@
 
 https://fabianobizarro.github.io/react-monsterid/
 
-## Using
+## How to use
 
 ```javascript
 import React from 'react';
