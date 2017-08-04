@@ -128,31 +128,37 @@
 /**
  * All code is in an anonymous closure to keep the global namespace clean.
  */
-(function (
-    global, pool, math, width, chunks, digits, monstermath) {
+
+let width = 256,
+  chunks = 6,
+  digits = 52,
+  pool = [],
+  arc4;
+
+
 
 //
 // The following constants are related to IEEE 754 limits.
 //
-var startdenom = math.pow(width, chunks),
-    significance = math.pow(2, digits),
-    overflow = significance * 2,
-    mask = width - 1;
+var startdenom = Math.pow(width, chunks),
+  significance = Math.pow(2, digits),
+  overflow = significance * 2,
+  mask = width - 1;
 
 //
 // seedrandom()
 // This is the seedrandom function described above.
 //
-monstermath['seedrandom'] = function(seed, use_entropy) {
+export const seedrandom = function (seed, use_entropy) {
   var key = [];
 
   // Flatten the seed string or build one from local entropy if needed.
   var shortseed = mixkey(flatten(
     use_entropy ? [seed, tostring(pool)] :
-    0 in arguments ? seed : autoseed(), 3), key);
+      0 in arguments ? seed : autoseed(), 3), key);
 
   // Use the seed to initialize an ARC4 generator.
-  var arc4 = new ARC4(key);
+  arc4 = new ARC4(key);
 
   // Mix the randomness into accumulated entropy.
   mixkey(tostring(arc4.S), pool);
@@ -162,25 +168,27 @@ monstermath['seedrandom'] = function(seed, use_entropy) {
   // This function returns a random double in [0, 1) that contains
   // randomness in every bit of the mantissa of the IEEE 754 value.
 
-  monstermath['random'] = function() {         // Closure to return a random double:
-    var n = arc4.g(chunks),             // Start with a numerator n < 2 ^ 48
-        d = startdenom,                 //   and denominator d = 2 ^ 48.
-        x = 0;                          //   and no 'extra last byte'.
-    while (n < significance) {          // Fill up all significant digits by
-      n = (n + x) * width;              //   shifting numerator and
-      d *= width;                       //   denominator and generating a
-      x = arc4.g(1);                    //   new least-significant-byte.
-    }
-    while (n >= overflow) {             // To avoid rounding up, before adding
-      n /= 2;                           //   last byte, shift everything
-      d /= 2;                           //   right using integer math until
-      x >>>= 1;                         //   we have exactly the desired bits.
-    }
-    return (n + x) / d;                 // Form the number within [0, 1).
-  };
+
 
   // Return the seed that was used
   return shortseed;
+};
+
+export const random = function () {         // Closure to return a random double:
+  var n = arc4.g(chunks),             // Start with a numerator n < 2 ^ 48
+    d = startdenom,                 //   and denominator d = 2 ^ 48.
+    x = 0;                          //   and no 'extra last byte'.
+  while (n < significance) {          // Fill up all significant digits by
+    n = (n + x) * width;              //   shifting numerator and
+    d *= width;                       //   denominator and generating a
+    x = arc4.g(1);                    //   new least-significant-byte.
+  }
+  while (n >= overflow) {             // To avoid rounding up, before adding
+    n /= 2;                           //   last byte, shift everything
+    d /= 2;                           //   right using integer math until
+    x >>>= 1;                         //   we have exactly the desired bits.
+  }
+  return (n + x) / d;                 // Form the number within [0, 1).
 };
 
 //
@@ -196,7 +204,7 @@ monstermath['seedrandom'] = function(seed, use_entropy) {
 /** @constructor */
 function ARC4(key) {
   var t, keylen = key.length,
-      me = this, i = 0, j = me.i = me.j = 0, s = me.S = [];
+    me = this, i = 0, j = me.i = me.j = 0, s = me.S = [];
 
   // The empty key [] is treated as [0].
   if (!keylen) { key = [keylen++]; }
@@ -211,10 +219,10 @@ function ARC4(key) {
   }
 
   // The "g" method returns the next (count) outputs as one number.
-  (me.g = function(count) {
+  (me.g = function (count) {
     // Using instance members instead of closure state nearly doubles speed.
     var t, r = 0,
-        i = me.i, j = me.j, s = me.S;
+      i = me.i, j = me.j, s = me.S;
     while (count--) {
       t = s[i = mask & (i + 1)];
       r = r * width + s[mask & ((s[i] = s[j = mask & (j + t)]) + (s[j] = t))];
@@ -235,7 +243,7 @@ function flatten(obj, depth) {
   if (depth && typ == 'o') {
     for (prop in obj) {
       if (obj.hasOwnProperty(prop)) {
-        try { result.push(flatten(obj[prop], depth - 1)); } catch (e) {}
+        try { result.push(flatten(obj[prop], depth - 1)); } catch (e) { }
       }
     }
   }
@@ -267,7 +275,7 @@ function autoseed(seed) {
     return tostring(seed);
   } catch (e) {
     return [+new Date, global.document, global.history,
-            global.navigator, global.screen, tostring(pool)];
+    global.navigator, global.screen, tostring(pool)];
   }
 }
 
@@ -286,15 +294,6 @@ function tostring(a) {
 // seedrandom will not call math.random on its own again after
 // initialization.
 //
-mixkey(math.random(), pool);
+mixkey(Math.random(), pool);
 
-// End anonymous scope, and pass initial values.
-})(
-  this,   // global window object
-  [],     // pool: entropy pool starts empty
-  Math,   // math: package containing random, pow, and seedrandom
-  256,    // width: each RC4 output is 0 <= x < 256
-  6,      // chunks: at least six RC4 outputs for each double
-  52,     // digits: there are 52 significant digits in a double
-  window.MonsterId = window.MonsterId || {}
-);
+  // End anonymous scope, and pass initial values.

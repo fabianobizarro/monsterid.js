@@ -4,7 +4,14 @@
   "description": "Generate pseudo random avatars in full browser compatible javascript.",
   "main": "monsterid.js",
   "dependencies": {
-    "grunt": "~0.4.1"
+    "babel-core": "^6.25.0",
+    "babel-loader": "^7.1.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "grunt": "~0.4.1",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "webpack": "^3.2.0"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
@@ -13,7 +20,7 @@
     "grunt-regarde": "~0.1.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "webpack"
   },
   "repository": {
     "type": "git",
