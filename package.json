@@ -1,8 +1,8 @@
 {
-  "name": "monsterid.js",
+  "name": "react-monsterid",
   "version": "0.1.0",
-  "description": "Generate pseudo random avatars in full browser compatible javascript.",
-  "main": "monsterid.js",
+  "description": "Implementation of monsterid in react",
+  "main": "src/Monster.js",
   "dependencies": {
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.1",
@@ -13,21 +13,14 @@
     "react-dom": "^15.6.1",
     "webpack": "^3.2.0"
   },
-  "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-contrib-uglify": "~0.2.1",
-    "grunt-contrib-concat": "~0.3.0",
-    "grunt-regarde": "~0.1.1"
-  },
   "scripts": {
     "start": "webpack"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/KevinGaudin/monsterid.js.git"
+    "url": "https://github.com/fabianobizarro/react-mosnterid.git"
   },
-  "author": "Kevin Gaudin",
+  "author": "Fabiano Bizarro",
   "license": "BSD",
-  "gitHead": "5d921a7edb85117bad1c0d37286383cf9aa8e649",
   "readmeFilename": "README.md"
 }
