@@ -11,10 +11,13 @@
     "grunt": "~1.0.4",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "webpack": "^3.2.0"
+    "webpack": "^3.2.0",
+    "snyk": "^1.252.0"
   },
   "scripts": {
-    "start": "webpack"
+    "start": "webpack",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -22,5 +25,6 @@
   },
   "author": "Fabiano Bizarro",
   "license": "BSD",
-  "readmeFilename": "README.md"
+  "readmeFilename": "README.md",
+  "snyk": true
 }
