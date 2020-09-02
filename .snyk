@@ -1,5 +1,5 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
-version: v1.14.0
+version: v1.19.0
 ignore: {}
 # patches apply the minimum changes required to fix a vulnerability
 patch:
@@ -64,6 +64,18 @@ patch:
         patched: '2019-11-30T13:51:41.044Z'
     - snyk > proxy-agent > pac-proxy-agent > get-uri > debug:
         patched: '2019-11-30T13:52:55.590Z'
+    - grunt > grunt-cli > liftoff > findup-sync > micromatch > snapdragon > debug:
+        patched: '2020-09-02T11:46:30.623Z'
+    - grunt > grunt-cli > liftoff > findup-sync > micromatch > braces > snapdragon > debug:
+        patched: '2020-09-02T11:46:30.623Z'
+    - grunt > grunt-cli > liftoff > findup-sync > micromatch > extglob > snapdragon > debug:
+        patched: '2020-09-02T11:46:30.623Z'
+    - grunt > grunt-cli > liftoff > findup-sync > micromatch > nanomatch > snapdragon > debug:
+        patched: '2020-09-02T11:46:30.623Z'
+    - grunt > grunt-cli > liftoff > findup-sync > micromatch > extglob > expand-brackets > debug:
+        patched: '2020-09-02T11:46:30.623Z'
+    - grunt > grunt-cli > liftoff > findup-sync > micromatch > extglob > expand-brackets > snapdragon > debug:
+        patched: '2020-09-02T11:46:30.623Z'
   SNYK-JS-LODASH-450202:
     - grunt > grunt-legacy-log > lodash:
         patched: '2019-11-30T13:51:41.044Z'
